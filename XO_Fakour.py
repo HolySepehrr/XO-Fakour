@@ -3,7 +3,7 @@ class game_page:
     
     def __init__(self):
         
-        self.map =[["_"," _"," _"],["_"," _"," _"],["_"," _"," _"]]
+        self.map =[["_","_","_"],["_","_","_"],["_","_","_"]]
         
         
     def show (self):
@@ -28,7 +28,7 @@ class game_page:
 
     
     def is_valid_move(self, move):
-        return (self.map[move[0]][move[1]] == '_')
+        return (self.map[move[0]][move[1]] == "_")
             
     
     
@@ -49,4 +49,3 @@ class player:
 
 a = game_page()
 a.show()
-        
