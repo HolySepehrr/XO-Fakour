@@ -4,14 +4,19 @@ class Board:
         self.map = [["_", "_", "_"], ["_", "_", "_"], ["_", "_", "_"]]
 
     def show(self):
+        print("""
+              
+              """)
         for i in range(3):
             for j in range(3):
                 print(self.map[i][j], " ", end="")
             print()
-
-    def makes_move(self, player, move):
+        print("""
+              """)
+    def makes_move(self, symbol, move):
         if self.is_valid_move(move):
-            self.map[move[0]][move[1]] = player.symbol
+            self.map[move[0]][move[1]] = symbol
+            self.show()
             return True
         else:
             print("این خونه پره، یه خونه دیگه رو برای حرکت انتخاب کنی!")
@@ -34,16 +39,16 @@ class Board:
         """
         bad az harekat dorost call beshe
         """
-        if self.map[move[0]][move[1]] == self.map[(move[0] + 1) % 3][move[1]] and self.map[(move[0] + 1) % 3][move[1]] == self.map[(move[0] + 2) % 3][move[1]]:
+        if self.map[move[0]][move[1]] == self.map[(move[0] + 1) % 3][move[1]] and self.map[move[0]][move[1]] == self.map[(move[0] + 2) % 3][move[1]]:
             return True
 
-        if self.map[move[0]][move[1]] == self.map[move[0]][(move[1] + 1) % 3] and self.map[move[0]][(move[1] + 1) % 3] == self.map[move[0]][(move[1] + 2) % 3]:
+        if self.map[move[0]][move[1]] == self.map[move[0]][(move[1] + 1) % 3] and self.map[move[0]][move[1]] == self.map[move[0]][(move[1] + 2) % 3]:
             return True
 
-        if self.map[0][0] == self.map[1][1] and self.map[1][1] == self.map[2][2]:
+        if self.map[0][0] == self.map[1][1] and self.map[1][1] == self.map[2][2 and (not(self.map[1][1] == "_"))]:
             return True
 
-        if self.map[0][2] == self.map[1][1] and self.map[1][1] == self.map[2][0]:
+        if self.map[0][2] == self.map[1][1] and self.map[1][1] == self.map[2][0] and not(self.map[1][1] != "_"):
             return True
 
         return False
