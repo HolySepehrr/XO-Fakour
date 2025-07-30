@@ -23,7 +23,7 @@ class Game:
     def play(self):
         while True:
             if self.current_player == self.player1:
-                move = self.player1.player_move()
+                move = self.player1.player_move(self.board)
             else:
                 move = self.player2.bot_move(self.board)
                 

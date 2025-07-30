@@ -19,11 +19,13 @@ class Board:
             self.show()
             return True
         else:
-            print("این خونه پره، یه خونه دیگه رو برای حرکت انتخاب کنی!")
+            print("این خونه پره، باید یه خونه دیگه رو برای حرکت انتخاب کنی!")
             return False
 
     def is_valid_move(self, move): 
-        return (self.get_symbol(move) == "_")
+            return (self.get_symbol(move) == "_")
+                
+
 
     def is_full(self):
         for i in range(3):

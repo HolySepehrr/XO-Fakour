@@ -14,10 +14,10 @@ class Player:
                 if 0 < move < 10:
                     move2 = [(move - 1) // 3, ((move - 1) % 3)]
                     if not(board.get_symbol(move2) == "_"):
-                        move = input("این خونه پره، یه خونه دیگه رو برای حرکت انتخاب کنی!      ")
+                        move = input("این خونه پره، باید یه خونه دیگه رو برای حرکت انتخاب کنی!      ")
 
-
-                    return move2
+                    else:    
+                        return move2
                 else:
                     move = input(f"یچی بزن بفهمم چکار باید بکنم من {self.name}(یه عدد از 1 تا 9)            ")
                     
