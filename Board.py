@@ -45,10 +45,10 @@ class Board:
         if self.map[move[0]][move[1]] == self.map[move[0]][(move[1] + 1) % 3] and self.map[move[0]][move[1]] == self.map[move[0]][(move[1] + 2) % 3]:
             return True
 
-        if self.map[0][0] == self.map[1][1] and self.map[1][1] == self.map[2][2 and (not(self.map[1][1] == "_"))]:
+        if self.map[0][0] == self.map[1][1] and self.map[1][1] == self.map[2][2] and (not(self.map[1][1] == "_")):
             return True
 
-        if self.map[0][2] == self.map[1][1] and self.map[1][1] == self.map[2][0] and not(self.map[1][1] != "_"):
+        if self.map[0][2] == self.map[1][1] and self.map[1][1] == self.map[2][0] and (not(self.map[1][1] == "_")):
             return True
 
         return False
