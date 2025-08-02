@@ -16,7 +16,6 @@ class Board:
     def makes_move(self, symbol, move):
         if self.is_valid_move(move):
             self.map[move[0]][move[1]] = symbol
-            self.show()
             return True
         else:
             print("این خونه پره، باید یه خونه دیگه رو برای حرکت انتخاب کنی!")
