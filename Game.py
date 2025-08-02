@@ -24,6 +24,8 @@ class Game:
         while True:
             if self.current_player == self.player1:
                 move = self.player1.player_move(self.board)
+            elif type(self.player1) == type(self.player2):
+                move = self.player2.player_move(self.board)
             else:
                 move = self.player2.bot_move(self.board)
                 
@@ -35,7 +37,7 @@ class Game:
                 return
 
             if self.board.is_full():
-                print("ای بابا، مساوی کردی که")
+                print("ای بابا، مساوی کردید که")
                 return
                 
             self.switch_player()
