@@ -76,19 +76,23 @@ def start():
                     role = input("لطفا 1 یا 2 رو وارد کن           ")
             
             if role == 2:
-                HOST = '0.0.0.0'
+                HOST = '127.0.0.1'
                 PORT = 55555
                 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 server_socket.bind((HOST, PORT))
                 server_socket.listen()
-                print(f"سرور در حال گوش دادن روی پورت {PORT} منتظر رفیقتم...")
+                print(f"سرور در حال گوش دادن روی پورت {HOST} منتظر رفیقتم...")
+
                 conn, addr = server_socket.accept()
-                print(f"رفیقت از آدرس {addr} اومد")
+                player2_name = conn.recv(1024).decode('utf-8')
+
+                print(f"رفیقت({player2_name}) از آدرس {addr}اومد")
+
+
                 name1 = input("اسمت رو وارد کن (X هستی):           ")
                 conn.send(name1.encode('utf-8'))
                 
-                player2_name = conn.recv(1024).decode('utf-8')
-                
+
                 player1 = NetworkPlayer(name1, "X", conn, addr)
                 player2 = NetworkPlayer(player2_name, "O", conn, addr)
                 
@@ -102,11 +106,10 @@ def start():
                 try:
                     client_socket.connect((HOST, PORT))
                     print(f"اتصال به سرور {HOST} برقرار شد.")
-                    
-                    player1_name = client_socket.recv(1024).decode('utf-8')
                     name2 = input("اسمت رو وارد کن (O هستی):           ")
                     client_socket.send(name2.encode('utf-8'))
-                    
+                    player1_name = client_socket.recv(1024).decode('utf-8')
+
                     player1 = NetworkPlayer(player1_name, "X", client_socket, None)
                     player2 = NetworkPlayer(name2, "O", client_socket, None)
                     
