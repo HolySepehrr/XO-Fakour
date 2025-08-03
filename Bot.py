@@ -29,7 +29,7 @@ class Bot:
                     test_bord.makes_move(self.player_symbol, move)
                     if test_bord.check_win(move):
                         return move
-                    
+
         test_bord = copy.deepcopy(bord)
         empty_spaces = []
         for i in range(3):
