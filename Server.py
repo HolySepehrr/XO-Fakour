@@ -11,7 +11,7 @@ class GameServer:
 
     def __init__(self):
         # تخته بازی رو میسازیم
-        self.board = Board.Board()
+        self.board = Board()
         # لیست بازیکنان و اتصالاتشون رو خالی میذاریم
         self.players = []
         self.player_connections = []
@@ -117,9 +117,9 @@ class GameServer:
         for i in range(2):
             conn, addr = server_socket.accept()
             if i == 0:
-                player = Player.Player("بازیکن 1", "X")
+                player = Player("بازیکن 1", "X")
             else:
-                player = Player.Player("بازیکن 2", "O")
+                player = Player("بازیکن 2", "O")
 
             # اطلاعات بازیکن و اتصالش رو ذخیره می‌کنیم
             self.player_connections.append(conn)

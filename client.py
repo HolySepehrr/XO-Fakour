@@ -15,9 +15,6 @@ def receive_messages(sock):
                 print("ارتباط با سرور قطع شد.")
                 break
 
-            # نمایش پیام دریافتی
-            print(data)
-
             # اگر سرور پیام 'نوبت شماست' رو فرستاد، یک پرامپت برای ورودی چاپ کن
             if "نوبت شماست" in data:
                 print(">>> ", end='', flush=True)
