@@ -115,6 +115,7 @@ def start():
         else:
             # اینجا تابع کلاینت برای بازی آنلاین اجرا میشه
             run_client()
+            return
             
     if player1 and player2 and final_current_player:
         board = Board()
