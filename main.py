@@ -113,6 +113,7 @@ def start():
             game = Game(board, player1, player2, final_current_player)
             game.play()
         else:
+            print("بعد از وصل شدن به سرور اسم خودتونو وارد کنید")
             # اینجا تابع کلاینت برای بازی آنلاین اجرا میشه
             run_client()
             return

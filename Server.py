@@ -16,17 +16,23 @@ class GameServer:
         self.current_player_index = 0
         self.game_over = False
         self.lock = threading.Lock()
-        # این barrier تضمین می‌کنه که بازی تا وقتی دو بازیکن وصل نشدن، شروع نشه
         self.barrier = threading.Barrier(2)
+
+    def reset_game(self):
+        """بازنشانی وضعیت سرور برای یک بازی جدید."""
+        self.board = Board()
+        self.players = []
+        self.player_connections = []
+        self.current_player_index = 0
+        self.game_over = False
+        self.barrier = threading.Barrier(2)
+        print("بازی جدید آماده است...")
 
     def handle_client(self, conn, player_index):
         player = self.players[player_index]
         conn.sendall(f"به بازی خوش آمدی! شما بازیکن {player.name} و نماد شما {player.symbol} هستید.".encode('utf-8'))
-
-        # اینجا منتظر می‌مونیم تا بازیکن دوم وصل بشه
         self.barrier.wait()
 
-        # بعد از اینکه هر دو بازیکن وصل شدن، بهشون پیام می‌دیم که بازی شروع شده
         if player_index == 0:
             self.send_message_to_all_clients("بازی شروع شد!")
             self.send_board_to_all_clients()
@@ -38,7 +44,7 @@ class GameServer:
                 try:
                     data = conn.recv(1024).decode('utf-8')
                     if not data:
-                        print("اتصال قطع شد:(")
+                        print(f"اتصال با بازیکن {player.name} قطع شد:(")
                         break
 
                     with self.lock:
@@ -96,21 +102,35 @@ class GameServer:
         server_socket.listen(2)
         print(f"سرور بازی روی {HOST}:{PORT} منتظر بازیکنان است...")
 
-        for i in range(2):
-            conn, addr = server_socket.accept()
-            if i == 0:
-                player = Player("بازیکن 1", "X")
-            else:
-                player = Player("بازیکن 2", "O")
+        while True:
+            # ایجاد یک لیست موقت برای نگهداری نخ‌ها
+            client_threads = []
 
-            self.player_connections.append(conn)
-            self.players.append(player)
-            print(f" {player.name} از {addr} متصل شد.")
+            for i in range(2):
+                conn, addr = server_socket.accept()
+                name = conn.recv(1024).decode('utf-8')
+                self.player_connections.append(conn)
 
-            client_thread = threading.Thread(target=self.handle_client, args=(conn, i))
-            client_thread.start()
+                if i == 0:
+                    player = Player(name, "X")
+                else:
+                    player = Player(name, "O")
 
-        print("هر دو بازیکن متصل شدند. بازی در حال شروع است...")
+                self.players.append(player)
+                print(f" {player.name} از {addr} متصل شد.")
+
+                client_thread = threading.Thread(target=self.handle_client, args=(conn, i))
+                client_threads.append(client_thread)
+                client_thread.start()
+
+            print("هر دو بازیکن متصل شدند. بازی در حال شروع است...")
+
+            # منتظر می‌مانیم تا هر دو نخ به اتمام برسند
+            for thread in client_threads:
+                thread.join()
+
+            # وقتی بازی تمام شد، سرور را برای بازی بعدی آماده می‌کنیم
+            self.reset_game()
 
 
 if __name__ == "__main__":

@@ -26,9 +26,13 @@ def receive_messages(sock):
 
 # تابع اصلی که کلاینت رو اجرا می‌کنه
 def main():
+    name = input("برای شروع بازی، اسمتو وارد کن           ")
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_socket.sendall(name.encode('utf-8'))
+
     try:
         # تلاش برای اتصال به سرور
+
         client_socket.connect((HOST, PORT))
         print("به سرور بازی دوز وصل شدید.")
 
