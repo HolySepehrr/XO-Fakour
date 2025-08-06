@@ -6,7 +6,6 @@ from Player import Player
 HOST = "127.0.0.1"
 PORT = 65432
 
-
 class GameServer:
 
     def __init__(self):
